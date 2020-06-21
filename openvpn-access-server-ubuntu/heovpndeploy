@@ -1,0 +1,76 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "virtualMachines_OVPN03_name": {
+            "defaultValue": "OVPN03",
+            "type": "String"
+        },
+        "images_OPENVPNServer_image_20200620111802_externalid": {
+            "defaultValue": "/subscriptions/dfc56fc5-6696-4c3c-ac3c-fce7c1c4fe46/resourceGroups/YaronTest/providers/Microsoft.Compute/images/OPENVPNServer-image-20200620111802",
+            "type": "String"
+        },
+        "disks_OVPN03_disk1_13e6eb2d05554791a11ed5cd56e8f830_externalid": {
+            "defaultValue": "/subscriptions/dfc56fc5-6696-4c3c-ac3c-fce7c1c4fe46/resourceGroups/YARONTEST/providers/Microsoft.Compute/disks/OVPN03_disk1_13e6eb2d05554791a11ed5cd56e8f830",
+            "type": "String"
+        },
+        "networkInterfaces_OVPN03VMNic_externalid": {
+            "defaultValue": "/subscriptions/dfc56fc5-6696-4c3c-ac3c-fce7c1c4fe46/resourceGroups/YaronTest/providers/Microsoft.Network/networkInterfaces/OVPN03VMNic",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Compute/virtualMachines",
+            "apiVersion": "2019-07-01",
+            "name": "[parameters('virtualMachines_OVPN03_name')]",
+            "location": "germanywestcentral",
+            "plan": {
+                "name": "access_server_byol",
+                "product": "openvpnas",
+                "publisher": "openvpn"
+            },
+            "properties": {
+                "hardwareProfile": {
+                    "vmSize": "Standard_DS1_v2"
+                },
+                "storageProfile": {
+                    "imageReference": {
+                        "id": "[parameters('images_OPENVPNServer_image_20200620111802_externalid')]"
+                    },
+                    "osDisk": {
+                        "osType": "Linux",
+                        "name": "[concat(parameters('virtualMachines_OVPN03_name'), '_disk1_13e6eb2d05554791a11ed5cd56e8f830')]",
+                        "createOption": "FromImage",
+                        "caching": "ReadWrite",
+                        "managedDisk": {
+                            "storageAccountType": "StandardSSD_LRS",
+                            "id": "[parameters('disks_OVPN03_disk1_13e6eb2d05554791a11ed5cd56e8f830_externalid')]"
+                        },
+                        "diskSizeGB": 30
+                    },
+                    "dataDisks": []
+                },
+                "osProfile": {
+                    "computerName": "[parameters('virtualMachines_OVPN03_name')]",
+                    "adminUsername": "headmin",
+                    "linuxConfiguration": {
+                        "disablePasswordAuthentication": false,
+                        "provisionVMAgent": true
+                    },
+                    "secrets": [],
+                    "allowExtensionOperations": true,
+                    "requireGuestProvisionSignal": true
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[parameters('networkInterfaces_OVPN03VMNic_externalid')]"
+                        }
+                    ]
+                }
+            }
+        }
+    ]
+}
