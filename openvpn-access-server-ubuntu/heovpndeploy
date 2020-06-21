@@ -63,6 +63,16 @@
                     "allowExtensionOperations": true,
                     "requireGuestProvisionSignal": true
                 },
+                "properties": {
+        "publisher": "he.Azure.Extensions",
+        "type": "CustomScript",
+        "typeHandlerVersion": "2.0",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "fileUris": [
+            "https://raw.githubusercontent.com/HackersEYE-CA/azure-quickstart-templates/master/openvpn-access-server-ubuntu/install_openvpn_access_server.sh"
+          ]
+        },
                 "networkProfile": {
                     "networkInterfaces": [
                         {
