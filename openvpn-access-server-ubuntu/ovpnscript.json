@@ -1,4 +1,4 @@
 {
-  "fileUris": ["https://raw.githubusercontent.com/Microsoft/dotnet-core-sample-templates/master/dotnet-core-music-linux/scripts/config-music.sh"],
-  "commandToExecute": "./ovpnscript.sh"
+  "fileUris": ["https://raw.githubusercontent.com/HackersEYE-CA/azure-quickstart-templates/master/openvpn-access-server-ubuntu/changeip.sh"],
+  "commandToExecute": "./changeip.sh"
 }
